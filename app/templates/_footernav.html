@@ -1,0 +1,31 @@
+		<!-- Menubar -->
+		<div class="menubar-area footer-fixed">
+			<div class="toolbar-inner menubar-nav">
+
+                {% if title == 'index' %}
+				    <a href="{{url_for('index')}}" class="nav-link active">
+                {% else %}
+    				<a href="{{url_for('index')}}" class="nav-link">
+                {% endif %}
+					<i class="fi-rr-home"></i>
+				</a>
+
+
+                {% if title == 'cart' %}
+				<a href="{{url_for('cart')}}" class="nav-link active">
+                {% else %}
+				<a href="{{url_for('cart')}}" class="nav-link">
+                {% endif %}
+					<i class="fi fi-rr-shopping-cart"></i>
+				</a>
+
+                {% if title == 'profile' %}
+				<a href="profile.html" class="nav-link active">
+                {% else %}
+                    <a href="profile.html" class="nav-link">
+                {% endif %}
+					<i class="fi fi-rr-user"></i>
+				</a>
+			</div>
+		</div>
+		<!-- Menubar -->
