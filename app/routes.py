@@ -6,8 +6,8 @@ from app.models import Admin, Coffe
 from app.forms import LoginForm, RegisterForm
 
 
-@login_required
 @app.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
@@ -35,7 +35,6 @@ def register():
     if form.validate_on_submit():
         errorT = 0
         emails = [email[0] for email in db.session.query(Admin.email).all()]
-        
         validasi_form = {
             'username': (form.username.data, 4, 64, "Nama Lengkap tidak valid"),
             'telp': (form.telp.data, 10, 15, "Nomor Telepon tidak valid"),
@@ -43,10 +42,9 @@ def register():
             'email': (form.email.data, 4, 45, "Email tidak valid"),
             'password': (form.password.data, 6, 45, "Password tidak valid")
         }
-        
-        for field, (data, min_len, max_len, message) in validasi_form.items():
+        for field, (data, min_len, max_len, pesan) in validasi_form.items():
             if len(data) < min_len or len(data) > max_len:
-                flash(message, "danger")
+                flash(pesan, "danger")
                 errorT += 1
                 
         if form.email.data in emails:
@@ -74,21 +72,21 @@ def register():
     return render_template('register.html', title='register', form=form)
 
 
-@login_required
 @app.route('/')
+@login_required
 def index():
     menu = Coffe.query.all()
     print(menu)
     return render_template('index.html', title='index', menu=menu, len=len)
 
 
-@login_required
 @app.route('/cart')
+@login_required
 def cart():
     return render_template('cart.html', title='cart')
 
 
-@login_required
 @app.route('/profile')
+@login_required
 def profile():
     return render_template('profile.html', title='profile')
