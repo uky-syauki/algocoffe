@@ -7,7 +7,7 @@
                 {% else %}
     				<a href="{{url_for('index')}}" class="nav-link">
                 {% endif %}
-					<i class="fi-rr-home"></i>
+					<i class="cstm-home"></i>
 				</a>
 
 
@@ -16,15 +16,15 @@
                 {% else %}
 				<a href="{{url_for('cart')}}" class="nav-link">
                 {% endif %}
-					<i class="fi fi-rr-shopping-cart"></i>
+					<i class="cstm-shopping-cart"></i>
 				</a>
 
                 {% if title == 'profile' %}
-				<a href="profile.html" class="nav-link active">
+				<a href="{{ url_for('profile')}}" class="nav-link active">
                 {% else %}
-                    <a href="profile.html" class="nav-link">
+                    <a href="{{ url_for('profile')}}" class="nav-link">
                 {% endif %}
-					<i class="fi fi-rr-user"></i>
+					<i class="cstm-user"></i>
 				</a>
 			</div>
 		</div>

@@ -1,0 +1,178 @@
+{% extends '_base.html' %}
+
+{% block content %}
+<body>
+<div class="page-wrapper">
+	<!-- Preloader -->
+	<div id="preloader" style="display: none;">
+		<div class="loader">
+			<div class="spinner-border text-primary" role="status">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+		</div>
+	</div>
+    <!-- Preloader end-->
+
+	<!-- Main Content Start  -->
+	<main class="page-content">
+		<div class="container py-0">
+			<div class="dz-authentication-area">
+				<div class="main-logo">
+					<a href="javascript:void(0);" class="back-btn">
+						<i class="feather icon-arrow-left"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+						  </svg></i>
+					</a>
+					<div class="logo">
+						<img src="{{ url_for('static', filename='/logo.png')}}" alt="logo">
+					</div>
+				</div>
+				<div class="section-head">
+					<h3 class="title">Create an account</h3>
+					{% with messages = get_flashed_messages(with_categories=true) %}
+					{% if messages %}
+						{% for category, message in messages %}
+						<div class="alert alert-{{ category }}">
+							{{ message }}
+						</div>
+						{% endfor %}
+					{% endif %}
+				{% endwith %}
+					<p></p>
+				</div>
+				<div class="account-section">
+					<form class="m-b20" method="POST">
+						{{ form.hidden_tag() }}
+						<div class="mb-4">
+							<label class="form-label" for="name">Nama Lengkap</label>
+							<div class="input-group input-mini input-lg">
+					<!--			<input type="name" id="name" class="form-control" value="williamsmith"> -->
+								{{ form.username(class_="form-control") }}
+							</div>
+						</div>
+						<div class="mb-4">
+							<label class="form-label" for="email">Nomor Telpon</label>
+							<div class="input-group input-mini input-lg">
+								<!-- <input type="Phone" id="phone" class="form-control" value="0853 4195 5788"> -->
+								 {{ form.telp(class_="form-control")}}
+							</div>
+						</div>
+						<div class="mb-4">
+							<label class="form-label" for="email">Alamat</label>
+							<div class="input-group input-mini input-lg">
+								<!-- <input type="Address" id="address" class="form-control" value="Jl. Mon Emmy Saelan"> -->
+								 {{ form.alamat(class_="form-control") }}
+							</div>
+						</div>
+						<div class="mb-4">
+							<label class="form-label" for="email">Email</label>
+							<div class="input-group input-mini input-lg">
+								<!-- <input type="email" id="email" class="form-control" value="algo@examplegmail.com"> -->
+								 {{ form.email(class_="form-control") }}
+							</div>
+						</div>
+						<div class="m-b30">
+							<label class="form-label" for="password">Password</label>
+							<div class="input-group input-mini input-lg">
+								<!-- <input type="password" id="password" class="form-control dz-password" value="123456789"> -->
+								 {{ form.password(class_="form-control") }}
+								<span class="input-group-text show-pass"> 
+									<i class="icon feather icon-eye-off eye-close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+										<path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/>
+										<path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/>
+									  </svg></i>
+									<i class="icon feather icon-eye eye-open"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+										<path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+										<path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+									  </svg></i>
+								</span>
+							</div>
+						</div>
+						<!-- <a href="https://ombe.dexignzone.com/bootstrap/xhtml/sign-in.html" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl">Sign up</a>  -->
+						 {{ form.submit(class_="btn btn-thin btn-lg w-100 btn-primary rounded-xl") }}
+					</form>
+					<div class="text-center">
+						<p class="form-text">By tapping “Sign Up” you accept our <a href="javascript:void(0);" class="link">terms</a> and <a href="javascript:void(0);" class="link">condition</a></p>
+					</div>
+				</div>	
+			</div>
+        </div>
+	</main>	
+	<!-- Main Content End  -->
+    
+    
+</div>
+<!--**********************************
+    Scripts
+***********************************-->
+
+<div class="offcanvas offcanvas-bottom m-3 rounded" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+        <div class="offcanvas-body small">
+            <ul class="theme-color-settings">
+                <li>
+                    <input class="filled-in" id="primary_color_1" applogo="logo1.svg" name="theme_color" type="radio" value="color-primary">
+					<label for="primary_color_1"></label>
+                    <span>Default</span>
+                </li>
+                <li>
+					<input class="filled-in" id="primary_color_2" applogo="logo2.svg" name="theme_color" type="radio" value="color-green">
+					<label for="primary_color_2"></label>
+                    <span>Green</span>
+                </li>
+                <li>
+                    <input class="filled-in" id="primary_color_3" applogo="logo3.svg" name="theme_color" type="radio" value="color-blue">
+					<label for="primary_color_3"></label>
+                    <span>Blue</span>
+                </li>
+                <li>
+                    <input class="filled-in" id="primary_color_4" applogo="logo4.svg" name="theme_color" type="radio" value="color-pink">
+					<label for="primary_color_4"></label>
+                    <span>Pink</span>
+                </li>
+                <li>
+                    <input class="filled-in" id="primary_color_5" applogo="logo5.svg" name="theme_color" type="radio" value="color-yellow">
+					<label for="primary_color_5"></label>
+                    <span>Yellow</span>
+                </li>
+                <li>
+                    <input class="filled-in" id="primary_color_6" applogo="logo6.svg" name="theme_color" type="radio" value="color-orange">
+					<label for="primary_color_6"></label>
+                    <span>Orange</span>
+                </li>
+                <li>
+                    <input class="filled-in" id="primary_color_7" applogo="logo7.svg" name="theme_color" type="radio" value="color-purple">
+					<label for="primary_color_7"></label>
+                    <span>Purple</span>
+                </li>
+                <li>
+					<input class="filled-in" id="primary_color_8" applogo="logo8.svg" name="theme_color" type="radio" value="color-red">
+					<label for="primary_color_8"></label>
+                    <span>Red</span>
+                </li>
+                <li>
+					<input class="filled-in" id="primary_color_9" applogo="logo9.svg" name="theme_color" type="radio" value="color-lightblue">
+					<label for="primary_color_9"></label>
+                    <span>Lightblue</span>
+                </li>
+				<li>
+                    <input class="filled-in" id="primary_color_10" applogo="logo10.svg" name="theme_color" type="radio" value="color-teal">
+					<label for="primary_color_10"></label>
+                    <span>Teal</span>
+                </li>
+                <li>
+                    <input class="filled-in" id="primary_color_11" applogo="logo11.svg" name="theme_color" type="radio" value="color-lime">
+					<label for="primary_color_11"></label>
+                    <span>Lime</span>
+                </li>
+                <li>
+                    <input class="filled-in" id="primary_color_12" applogo="logo12.svg" name="theme_color" type="radio" value="color-deeporange">
+					<label for="primary_color_12"></label>
+                    <span>Deeporange</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+
+{% endblock %}

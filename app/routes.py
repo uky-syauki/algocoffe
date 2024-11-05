@@ -1,13 +1,94 @@
-from flask import render_template
+from flask import render_template, redirect, url_for, flash
+from flask_login import login_required, login_user, logout_user, current_user
 
-from app import app
+from app import app, db
+from app.models import Admin, Coffe
+from app.forms import LoginForm, RegisterForm
 
 
+@login_required
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    loginform = LoginForm()
+    if loginform.validate_on_submit():
+        user = Admin.query.filter_by(email=loginform.email.data).first()
+        if user is None or not user.check_password(loginform.password.data):
+            flash("Username atau Password salah", "danger")
+            return redirect(url_for('login'))
+        flash("Login Berhasil!", "success")
+        login_user(user)
+        return redirect(url_for('index'))
+    return render_template('sign.html', title='login', form=loginform)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        errorT = 0
+        emails = [email[0] for email in db.session.query(Admin.email).all()]
+        
+        validasi_form = {
+            'username': (form.username.data, 4, 64, "Nama Lengkap tidak valid"),
+            'telp': (form.telp.data, 10, 15, "Nomor Telepon tidak valid"),
+            'alamat': (form.alamat.data, 4, 64, "Alamat tidak valid"),
+            'email': (form.email.data, 4, 45, "Email tidak valid"),
+            'password': (form.password.data, 6, 45, "Password tidak valid")
+        }
+        
+        for field, (data, min_len, max_len, message) in validasi_form.items():
+            if len(data) < min_len or len(data) > max_len:
+                flash(message, "danger")
+                errorT += 1
+                
+        if form.email.data in emails:
+            flash("Email telah terdaftar, gunakam email yang lain atau login", "danger")
+            return redirect(url_for('register'))
+        if errorT > 0:
+            return redirect(url_for('register'))
+        try:
+            newUser = Admin(
+                username=form.username.data,
+                telp=form.telp.data,
+                alamat=form.alamat.data,
+                email=form.email.data,
+                role="biasa"
+            )
+            newUser.set_password(form.password.data)
+            db.session.add(newUser)
+            db.session.commit()
+            flash("Akun berhasil dibuat", "success")
+            return redirect(url_for('login'))
+        except:
+            db.session.rollback()
+            flash("Terjadi Kesalahan", "danger")
+            return redirect(url_for('register'))
+    return render_template('register.html', title='register', form=form)
+
+
+@login_required
 @app.route('/')
 def index():
-    return render_template('index.html', title='index')
+    menu = Coffe.query.all()
+    print(menu)
+    return render_template('index.html', title='index', menu=menu, len=len)
 
 
+@login_required
 @app.route('/cart')
 def cart():
     return render_template('cart.html', title='cart')
+
+
+@login_required
+@app.route('/profile')
+def profile():
+    return render_template('profile.html', title='profile')

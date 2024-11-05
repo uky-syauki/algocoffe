@@ -96,6 +96,14 @@
 @import url("./../icons/feather/css/iconfont.css");
 @import url("./../icons/flaticon/css/flaticon.css");
 @import url("./../icons/themify-icons/css/themify-icons.css");
+
+@font-face {
+  font-family: 'Font Awesome 6 Free';
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url("../webfonts/fa-solid-900.woff2") format("woff2"), url("../webfonts/fa-solid-900.ttf") format("truetype"); }
+
 :root {
   --primary: #ff7d01;
   --primary-hover: #058f5e;
@@ -11877,7 +11885,8 @@ section {
     bottom: 0;
     left: 0;
     z-index: 10;
-    width: 100%; }
+    width: 100%; 
+    padding-left: 10%;}
   .menubar-area .toolbar-inner {
     padding-left: 15px;
     padding-right: 15px;
@@ -16581,8 +16590,8 @@ select.form-select {
       border-radius: 50%;
       background-color: var(--primary); }
       .dz-stepper.style-2 .bootstrap-touchspin .input-group-btn .btn.bootstrap-touchspin-up::after {
-        content: "\e8b1";
-        font-family: 'feather' !important;
+        content: "\f067";
+        font-family: 'Font Awesome 6 Free' !important;
         font-size: 16px;
         position: absolute;
         left: 50%;
@@ -16590,8 +16599,8 @@ select.form-select {
         color: #fff;
         transform: translate(-50%, -50%); }
       .dz-stepper.style-2 .bootstrap-touchspin .input-group-btn .btn.bootstrap-touchspin-down::after {
-        content: "\e897";
-        font-family: 'feather' !important;
+        content: "\f068"; 
+        font-family: 'Font Awesome 6 Free' !important;
         font-size: 16px;
         position: absolute;
         left: 50%;
@@ -17878,7 +17887,7 @@ label input {
   margin-bottom: 20px; }
 
 .featured-list{
-  margin-bottom: 10%;
+  margin-bottom: 13%;
 }
 .dz-custom-swiper {
   margin: 0 -15px; }
@@ -19401,7 +19410,7 @@ label input {
 
 /*# sourceMappingURL=style.css.map */
 
-.fi-rr-home {
+.cstm-home {
   /* color: #fff;
   width: 20px;
     height: 20px; */
@@ -19411,23 +19420,24 @@ label input {
     background-position: center;
 }
 
-.fi-rr-heart {
+.cstm-heart {
     background-image: url('icon/heart.svg');
     background-size: contain; /* Memastikan gambar tetap dalam proporsi */
     background-repeat: no-repeat;
     background-position: center;
 }
 
-.fi-rr-shopping-cart {
+.cstm-shopping-cart {
   background-image: url('icon/shopping-cart.svg');
   background-size: contain; /* Memastikan gambar tetap dalam proporsi */
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.fi-rr-user {
+.cstm-user {
   background-image: url('icon/user.svg');
   background-size: contain; /* Memastikan gambar tetap dalam proporsi */
   background-repeat: no-repeat;
   background-position: center;
 }
+
