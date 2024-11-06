@@ -393,7 +393,7 @@
 												<span class="input-group-btn input-group-prepend">
 													
 												</span>
-												<input readonly="readonly" class="stepper form-control" id="p{{isi.id}}" type="text" value="0" name="demo3">
+												<input readonly="readonly" class="stepper form-control" id="{{isi.id}}" type="text" value="0" name="demo3">
 												<span class="input-group-btn input-group-append">
 													
 												</span>
@@ -523,9 +523,27 @@
 		let arr = {}
 		const pa = document.getElementsByName("demo3") 
 		pa.forEach(item => {
-			arr[item.id] = item.value;
+			if (item.value != "0") {
+				arr[item.id] = item.value;
+			}
 		})
 		console.log(arr);
+
+		fetch('/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(arr)  // Mengonversi objek arr menjadi JSON
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Response from server:', data);
+			window.location.href = "/checkout";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 	}
 </script>
 </body>

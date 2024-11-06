@@ -1,0 +1,187 @@
+{% extends '_base.html' %}
+
+{% block content %}
+<body class="bg-light">
+<div class="page-wrapper full-height">
+    
+	<!-- Preloader -->
+	<div id="preloader" style="display: none;">
+		<div class="loader">
+			<div class="spinner-border text-primary" role="status">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+		</div>
+	</div>
+    <!-- Preloader end-->
+	
+	<!-- Header -->
+		<header class="header header-fixed border-bottom">
+			<div class="header-content">
+				<div class="left-content">
+					<a href="javascript:void(0);" class="back-btn">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+						  </svg>
+					</a>
+				</div>
+				<div class="mid-content">
+					<h4 class="title">Checkout</h4>
+				</div>
+				<div class="right-content"></div>
+			</div>
+		</header>
+	<!-- Header -->
+	
+	<!-- Main Content Start -->
+	<main class="page-content space-top p-b80">
+		<div class="container">
+			<div class="dz-flex-box">	
+				<div class="dz-list m-b20">
+					<ul class="dz-list-group">
+						<!--
+						<li class="list-group-items">
+							<a href="https://ombe.dexignzone.com/bootstrap/xhtml/delivery-address.html" class="item-link">
+								<div class="dz-icon style-2 icon-fill"><i class="fi fi-rr-marker font-20"></i></div>
+								<div class="list-content">
+									<h6 class="title">Delivery address</h6>
+									<p class="active-status">123 Main Street, Anytown, USA 12345</p>
+								</div>
+							</a>
+						</li>
+					-->
+						<li class="list-group-items">
+							<a href="" class="item-link">
+								<div class="dz-icon dz-icon style-2 icon-fill"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-square" viewBox="0 0 16 16" style="fill: #fff;">
+									<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+									<path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+								  </svg></div>
+								<div class="list-content">
+									<h6 class="title">{{ current_user.username }}</h6>
+									<p class="active-status">{{ current_user.email}}</p>
+								</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="notes">Additional Notes:</label>
+					<textarea class="form-control dz-textarea" name="notes" id="notes" rows="4" placeholder="Write Here"></textarea>
+				</div>
+
+				<div class="view-cart mt-auto">
+					<ul>
+				<!--		<li>
+							<span class="name">bluebell hand block tiered</span>
+							<span class="about">2 x $2000.00</span>
+						</li>
+						<li>
+							<span class="name">Men Black Grey Allover Printed:</span>
+							<span class="about">2 x $1699.00</span>
+						</li>
+						<li>
+							<span class="name">Discount</span>
+							<span class="about">-$100.00</span>
+						</li>
+						<li>
+							<span class="name">Shipping</span>
+							<span class="status font-w500">FREE Delivery</span>
+						</li>
+						<li class="dz-total">
+							<span class="name font-18 font-w600">My Order</span>
+							<h5 class="price">$3,599.00</h5>
+						</li> -->
+						{% for isi in pesanan %}
+							<li>
+								<span class="name">{{ pesanan[isi][0] }} {{ isi }}</span>
+								<span class="about">Rp {{ pesanan[isi][1] }}</span>
+							</li>
+						{% endfor %}
+						<li>
+							<span class="name"></span>
+							<span class="about"><b>Total Rp {{ total }}</b></span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</main>
+	<!-- Main Content End -->
+
+	<!-- Footer Fixed Button -->	
+	<div class="footer-fixed-btn bottom-0 bg-white">
+		<a href="#" class="btn btn-lg btn-thin btn-primary w-100 rounded-xl">Submit Order</a>
+	</div>	
+	<!-- Footer Fixed Button -->	
+</div>  
+<!--**********************************
+    Scripts
+***********************************-->
+<div class="offcanvas offcanvas-bottom m-3 rounded" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+        <div class="offcanvas-body small">
+            <ul class="theme-color-settings">
+                <li>
+                    <input class="filled-in" id="primary_color_1" applogo="logo1.svg" name="theme_color" type="radio" value="color-primary">
+					<label for="primary_color_1"></label>
+                    <span>Default</span>
+                </li>
+                <li>
+					<input class="filled-in" id="primary_color_2" applogo="logo2.svg" name="theme_color" type="radio" value="color-green">
+					<label for="primary_color_2"></label>
+                    <span>Green</span>
+                </li>
+                <li>
+                    <input class="filled-in" id="primary_color_3" applogo="logo3.svg" name="theme_color" type="radio" value="color-blue">
+					<label for="primary_color_3"></label>
+                    <span>Blue</span>
+                </li>
+                <li>
+                    <input class="filled-in" id="primary_color_4" applogo="logo4.svg" name="theme_color" type="radio" value="color-pink">
+					<label for="primary_color_4"></label>
+                    <span>Pink</span>
+                </li>
+                <li>
+                    <input class="filled-in" id="primary_color_5" applogo="logo5.svg" name="theme_color" type="radio" value="color-yellow">
+					<label for="primary_color_5"></label>
+                    <span>Yellow</span>
+                </li>
+                <li>
+                    <input class="filled-in" id="primary_color_6" applogo="logo6.svg" name="theme_color" type="radio" value="color-orange">
+					<label for="primary_color_6"></label>
+                    <span>Orange</span>
+                </li>
+                <li>
+                    <input class="filled-in" id="primary_color_7" applogo="logo7.svg" name="theme_color" type="radio" value="color-purple">
+					<label for="primary_color_7"></label>
+                    <span>Purple</span>
+                </li>
+                <li>
+					<input class="filled-in" id="primary_color_8" applogo="logo8.svg" name="theme_color" type="radio" value="color-red">
+					<label for="primary_color_8"></label>
+                    <span>Red</span>
+                </li>
+                <li>
+					<input class="filled-in" id="primary_color_9" applogo="logo9.svg" name="theme_color" type="radio" value="color-lightblue">
+					<label for="primary_color_9"></label>
+                    <span>Lightblue</span>
+                </li>
+				<li>
+                    <input class="filled-in" id="primary_color_10" applogo="logo10.svg" name="theme_color" type="radio" value="color-teal">
+					<label for="primary_color_10"></label>
+                    <span>Teal</span>
+                </li>
+                <li>
+                    <input class="filled-in" id="primary_color_11" applogo="logo11.svg" name="theme_color" type="radio" value="color-lime">
+					<label for="primary_color_11"></label>
+                    <span>Lime</span>
+                </li>
+                <li>
+                    <input class="filled-in" id="primary_color_12" applogo="logo12.svg" name="theme_color" type="radio" value="color-deeporange">
+					<label for="primary_color_12"></label>
+                    <span>Deeporange</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+{% endblock %}

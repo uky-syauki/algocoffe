@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request, jsonify, session
 from flask_login import login_required, login_user, logout_user, current_user
 
 from app import app, db
@@ -72,11 +72,17 @@ def register():
     return render_template('register.html', title='register', form=form)
 
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 @login_required
 def index():
     menu = Coffe.query.all()
     print(menu)
+    if request.method == 'POST':
+        data = request.get_json()
+        print(data)
+        session['data_checkout'] = data
+        return jsonify({"status": "Data received", "data": data}), 200
+        # return redirect(url_for('checkout'))
     return render_template('index.html', title='index', menu=menu, len=len)
 
 
@@ -90,3 +96,19 @@ def cart():
 @login_required
 def profile():
     return render_template('profile.html', title='profile')
+
+
+@app.route("/checkout")
+def checkout():
+    data = session.get('data_checkout')
+    pesanan = {}
+    total = 0
+    for isi in data:
+        print(f"id: {isi}: jumlah: {data[isi]}")
+        menu = Coffe.query.filter_by(id=isi).first()
+        total_harga = int(data[isi]) * menu.harga 
+        total += total_harga
+        pesanan[menu.nama] = [data[isi], "{:,.0f}".format(total_harga).replace(",", ".")]
+    print(pesanan)
+    total = "{:,.0f}".format(total).replace(",", ".")
+    return render_template('chekout.html', title='checkout', pesanan=pesanan, total=total)
