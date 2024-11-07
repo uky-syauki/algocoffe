@@ -108,9 +108,13 @@
 	<!-- Main Content End -->
 
 	<!-- Footer Fixed Button -->	
+	 <form method="POST">
+		{{ form.hidden_tag() }}
 	<div class="footer-fixed-btn bottom-0 bg-white">
-		<a href="#" class="btn btn-lg btn-thin btn-primary w-100 rounded-xl">Submit Order</a>
+		<!-- <a href="#" class="btn btn-lg btn-thin btn-primary w-100 rounded-xl">Submit Order</a> -->
+		{{ form.submit(class_="btn btn-lg btn-thin btn-primary w-100 rounded-xl") }}
 	</div>	
+</form>
 	<!-- Footer Fixed Button -->	
 </div>  
 <!--**********************************

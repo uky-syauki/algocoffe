@@ -20,11 +20,11 @@
 			<div class="header-content">
 				<div class="left-content">
 					<div class="dz-head-items">
-						<h5 class="title mb-0">My Cart</h5>
+						<h5 class="title mb-0">Pesanan saya</h5>
 						<ul class="dz-meta">
 							<li class="dz-item"><b>8</b> items</li>
 							<li class="dz-item">Deliver to: <b>London</b></li>
-						</ul>
+						</ul> 
 					</div>
 				</div>
 				<div class="mid-content"></div>
@@ -43,20 +43,22 @@
 		<div class="container pt-0">
 			<div class="dz-total-area bg-white">
 				<ul class="total-prize">
-					<li class="name">Subtotal</li>
-					<li class="prize">$3,599</li>
+					<li class="name">Bayar</li>
+					<li class="prize">Rp {{ bayar }}</li>
 				</ul>
-				<div class="dz-text"><i class="feather icon-check"></i>Your order is eligible for free Delivery</div>
+				<div class="dz-text"><i class="feather icon-check"></i>Pesanan anda sedang diproses</div>
 			</div>
 			<div class="dz-flex-box p-b100">
+				{% for isi in data %}
+				{% for isi2 in data[isi]['menu'] %}
 				<div class="dz-cart-list">
 					<div class="dz-media">
-						<img src="Ombe-%20Coffee%20Shop%20Mobile%20App%20Template%20(Bootstrap%20+%20PWA)%20_%20DexignZone3_files/product1.jpg" alt="">
+						<img src="{{url_for('static', filename='/product1.jpg')}}" alt="">
 					</div>
 					<div class="dz-content">
-						<h6 class="title"><a href="https://ombe.dexignzone.com/bootstrap/xhtml/product-detail.html">Hot Creamy Cappuccino Latte Ombe</a></h6>
+						<h6 class="title"><a href="">{{ data[isi]['menu'][isi2]['nama'] }}</a></h6>
 						<ul class="dz-meta">
-							<li class="dz-price">$8.9<del>$9.5</del></li>
+							<li class="dz-price">Rp {{ data[isi]['menu'][isi2]['harga'] }} x {{ data[isi]['menu'][isi2]['jumlah'] }} = {{ data[isi]['menu'][isi2]['total'] }}</li>
 							<li class="dz-review"><i class="feather icon-star-on"></i><span>(2k Review)</span></li>
 						</ul>
 						<div class=" d-flex align-items-center">
@@ -64,9 +66,12 @@
 						</div>
 					</div>
 				</div>
+				{% endfor %}
+				{% endfor %}
+				<!--
 				<div class="dz-cart-list">
 					<div class="dz-media">
-						<img src="Ombe-%20Coffee%20Shop%20Mobile%20App%20Template%20(Bootstrap%20+%20PWA)%20_%20DexignZone3_files/product2.jpg" alt="">
+						<img src="{{url_for('static', filename='/product2.jpg')}}" alt="">
 					</div>
 					<div class="dz-content">
 						<h6 class="title"><a href="https://ombe.dexignzone.com/bootstrap/xhtml/product-detail.html">Creamy Mocha Ome Coffee </a></h6>
@@ -78,7 +83,7 @@
 				</div>
 				<div class="dz-cart-list">
 					<div class="dz-media">
-						<img src="Ombe-%20Coffee%20Shop%20Mobile%20App%20Template%20(Bootstrap%20+%20PWA)%20_%20DexignZone3_files/product3.jpg" alt="">
+						<img src="{{url_for('static', filename='/product3.jpg')}}" alt="">
 					</div>
 					<div class="dz-content">
 						<h6 class="title"><a href="https://ombe.dexignzone.com/bootstrap/xhtml/product-detail.html">Ice Chocolate Coffee</a></h6>
@@ -90,7 +95,7 @@
 							
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</main>

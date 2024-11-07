@@ -2,8 +2,10 @@ from flask import render_template, redirect, url_for, flash, request, jsonify, s
 from flask_login import login_required, login_user, logout_user, current_user
 
 from app import app, db
-from app.models import Admin, Coffe
-from app.forms import LoginForm, RegisterForm
+from app.models import Admin, Coffe, Transaksi, Transaksi_menu
+from app.forms import LoginForm, RegisterForm, PesananForm
+
+
 
 
 @app.route('/logout')
@@ -86,10 +88,27 @@ def index():
     return render_template('index.html', title='index', menu=menu, len=len)
 
 
-@app.route('/cart')
+@app.route('/pesanan')
 @login_required
-def cart():
-    return render_template('cart.html', title='cart')
+def pesanan():
+    data = {}
+    bayar = 0
+    curr_trx = Transaksi.query.filter_by(id_user=current_user.id, status="Diproses")
+    for trx in curr_trx:
+        data[trx.id] = {}
+        data[trx.id]['date'] = trx.date
+        data[trx.id]['status'] = trx.status
+        data[trx.id]["menu"] = {}
+        for menu in trx.menu():
+            data[trx.id]['menu'][menu.id] = {}    
+            data[trx.id]['menu'][menu.id]['jumlah'] = menu.jumlah    
+            pesanan = menu.pesanan()
+            data[trx.id]['menu'][menu.id]['nama'] = pesanan.nama    
+            data[trx.id]['menu'][menu.id]['harga'] = '{:,.0f}'.format(pesanan.harga).replace(',','.') 
+            data[trx.id]['menu'][menu.id]['total'] = '{:,.0f}'.format(menu.jumlah * pesanan.harga).replace(',','.') 
+            bayar += menu.jumlah * pesanan.harga
+    bayar = '{:,.0f}'.format(bayar).replace(',','.')
+    return render_template('cart.html', title='pesanan', data=data, bayar=bayar)
 
 
 @app.route('/profile')
@@ -98,8 +117,10 @@ def profile():
     return render_template('profile.html', title='profile')
 
 
-@app.route("/checkout")
+@app.route("/checkout", methods=['GET', 'POST'])
+@login_required
 def checkout():
+    form = PesananForm()
     data = session.get('data_checkout')
     pesanan = {}
     total = 0
@@ -109,6 +130,18 @@ def checkout():
         total_harga = int(data[isi]) * menu.harga 
         total += total_harga
         pesanan[menu.nama] = [data[isi], "{:,.0f}".format(total_harga).replace(",", ".")]
-    print(pesanan)
+    if form.validate_on_submit():
+        trx = Transaksi(id_user=current_user.id)
+        db.session.add(trx)
+        for isi in data:
+            menu = Coffe.query.filter_by(id=isi).first()
+            trx_menu = Transaksi_menu(id_transaksi=trx.id, id_menu=menu.id, jumlah=data[isi])
+            db.session.add(trx_menu)
+        try:
+            db.session.commit()
+            return redirect(url_for('pesanan'))
+        except:
+            flash("Terjadi kesalahan", "danger")
+            db.session.rollback()
     total = "{:,.0f}".format(total).replace(",", ".")
-    return render_template('chekout.html', title='checkout', pesanan=pesanan, total=total)
+    return render_template('chekout.html', title='checkout', pesanan=pesanan, total=total, form=form)

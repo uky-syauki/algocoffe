@@ -2,6 +2,8 @@ from app import db, login
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
+from datetime import datetime
+
 class Admin(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True)
@@ -28,4 +30,28 @@ class Coffe(db.Model):
     nama = db.Column(db.String(42), index=True)
     harga = db.Column(db.Integer)
     rating = db.Column(db.Integer)
+
+
+class Transaksi(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    id_user = db.Column(db.Integer)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+    status = db.Column(db.String(10), default="Diproses")
+    def __repr__(self):
+        return f"<Transaksi {self.id}>"
+    def menu(self):
+        return Transaksi_menu.query.filter_by(id_transaksi=self.id)
+        
+
+
+class Transaksi_menu(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    id_transaksi = db.Column(db.Integer)
+    id_menu = db.Column(db.Integer)
+    jumlah = db.Column(db.Integer)
+    def __repr__(self):
+        return f"<Trx menu {self.id}>"
+    def pesanan(self):
+        return Coffe.query.filter_by(id=self.id_menu).first()
+        
     
