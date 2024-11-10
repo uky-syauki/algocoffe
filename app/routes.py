@@ -6,8 +6,6 @@ from app.models import Admin, Coffe, Transaksi, Transaksi_menu
 from app.forms import LoginForm, RegisterForm, PesananForm
 
 
-
-
 @app.route('/logout')
 @login_required
 def logout():
@@ -74,9 +72,19 @@ def register():
     return render_template('register.html', title='register', form=form)
 
 
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    if current_user.role != "superadmin":
+        return redirect(url_for('index'))
+    return render_template("dashboard.html", title="Dasboard")
+
+
 @app.route('/', methods=['GET','POST'])
 @login_required
 def index():
+    if current_user.role == "superadmin":
+        return redirect(url_for('dashboard'))
     menu = Coffe.query.all()
     print(menu)
     if request.method == 'POST':
